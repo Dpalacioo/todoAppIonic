@@ -2,7 +2,7 @@ export interface Task {
   id: string;
   title: string;
   completed: boolean;
-  categoryId?: string;
+  categoryId: string;
   createdAt: number;
   selected?: boolean;
 }

@@ -5,15 +5,37 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <!-- Crear tarea -->
   <ion-item>
     <ion-input
       placeholder="Nueva tarea"
       [(ngModel)]="newTaskTitle"
       (keyup.enter)="addTask()"
     ></ion-input>
-    <ion-button slot="end" (click)="addTask()">Agregar</ion-button>
   </ion-item>
 
+  <!-- Selector de categoría -->
+  <ion-item>
+    <ion-label>Categoría</ion-label>
+    <ion-select [(ngModel)]="selectedCategoryId">
+      <ion-select-option
+        *ngFor="let category of categories"
+        [value]="category.id"
+      >
+        {{ category.name }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-button
+    expand="block"
+    (click)="addTask()"
+    [disabled]="!newTaskTitle.trim()"
+  >
+    Agregar tarea
+  </ion-button>
+
+  <!-- Lista de tareas -->
   <ion-list>
     <ion-item *ngFor="let task of tasks">
       <ion-checkbox
@@ -23,7 +45,8 @@
       ></ion-checkbox>
 
       <ion-label [class.completed]="task.completed">
-        {{ task.title }}
+        <h2>{{ task.title }}</h2>
+        <p>Categoría: {{ getCategoryName(task.categoryId) }}</p>
       </ion-label>
 
       <ion-button
@@ -37,6 +60,8 @@
     </ion-item>
   </ion-list>
 </ion-content>
+
+<!-- Footer acción masiva -->
 <ion-footer *ngIf="hasSelectedTasks()">
   <ion-toolbar>
     <ion-button expand="block" color="success" (click)="completeSelected()">

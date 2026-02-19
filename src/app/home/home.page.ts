@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../services/task.service';
+import { CategoryService } from '../services/category.service';
 import { Task } from '../models/task.model';
+import { Category } from '../models/category.model';
 
 @Component({
   selector: 'app-home',
@@ -9,11 +11,18 @@ import { Task } from '../models/task.model';
 })
 export class HomePage implements OnInit {
   tasks: Task[] = [];
-  newTaskTitle = '';
+  categories: Category[] = [];
 
-  constructor(private taskService: TaskService) {}
+  newTaskTitle: string = '';
+  selectedCategoryId: string = 'general';
+
+  constructor(
+    private taskService: TaskService,
+    private categoryService: CategoryService,
+  ) {}
 
   ngOnInit(): void {
+    this.loadCategories();
     this.loadTasks();
   }
 
@@ -21,13 +30,17 @@ export class HomePage implements OnInit {
     this.tasks = this.taskService.getTasks();
   }
 
-  addTask(): void {
-    if (!this.newTaskTitle.trim()) {
-      return;
-    }
+  loadCategories(): void {
+    this.categories = this.categoryService.getCategories();
+  }
 
-    this.taskService.addTask(this.newTaskTitle);
+  addTask(): void {
+    if (!this.newTaskTitle.trim()) return;
+
+    this.taskService.addTask(this.newTaskTitle, this.selectedCategoryId);
+
     this.newTaskTitle = '';
+    this.selectedCategoryId = 'general';
     this.loadTasks();
   }
 
@@ -41,20 +54,21 @@ export class HomePage implements OnInit {
     this.loadTasks();
   }
 
-  toggleSelection(task: Task): void {
-    task.selected = !task.selected;
-  }
-
   completeSelected(): void {
     this.taskService.completeSelectedTasks();
     this.loadTasks();
   }
 
   hasSelectedTasks(): boolean {
-    return this.tasks.some((t) => t.selected);
+    return this.tasks.some((task) => task.selected);
   }
 
   selectedCount(): number {
-  return this.tasks.filter(t => t.selected).length;
-}
+    return this.tasks.filter((task) => task.selected).length;
+  }
+
+  getCategoryName(categoryId: string): string {
+    const category = this.categories.find((c) => c.id === categoryId);
+    return category ? category.name : 'General';
+  }
 }
