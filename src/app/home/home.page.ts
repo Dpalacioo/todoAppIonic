@@ -16,6 +16,8 @@ export class HomePage implements OnInit {
   newTaskTitle: string = '';
   selectedCategoryId: string = 'general';
 
+  filterCategoryId: string = 'all';
+
   constructor(
     private taskService: TaskService,
     private categoryService: CategoryService,
@@ -27,7 +29,11 @@ export class HomePage implements OnInit {
   }
 
   loadTasks(): void {
-    this.tasks = this.taskService.getTasks();
+    if (this.filterCategoryId === 'all') {
+      this.tasks = this.taskService.getTasks();
+    } else {
+      this.tasks = this.taskService.getTasksByCategory(this.filterCategoryId);
+    }
   }
 
   loadCategories(): void {
@@ -70,5 +76,9 @@ export class HomePage implements OnInit {
   getCategoryName(categoryId: string): string {
     const category = this.categories.find((c) => c.id === categoryId);
     return category ? category.name : 'General';
+  }
+
+  onFilterChange(): void {
+    this.loadTasks();
   }
 }

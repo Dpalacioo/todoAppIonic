@@ -5,6 +5,19 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <ion-item>
+    <ion-label>Filtrar por</ion-label>
+    <ion-select [(ngModel)]="filterCategoryId" (ionChange)="onFilterChange()">
+      <ion-select-option value="all"> Todas </ion-select-option>
+
+      <ion-select-option
+        *ngFor="let category of categories"
+        [value]="category.id"
+      >
+        {{ category.name }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
   <!-- Crear tarea -->
   <ion-item>
     <ion-input
