@@ -9,7 +9,10 @@ import { CategoryService } from 'src/app/services/category.service';
 })
 export class CategoriesPage implements OnInit {
   categories: Category[] = [];
-  newCategory = '';
+  newCategory: string = '';
+
+  editingCategoryId: string | null = null;
+  editingName: string = '';
 
   constructor(private categoryService: CategoryService) {}
 
@@ -22,13 +25,34 @@ export class CategoriesPage implements OnInit {
   }
 
   addCategory(): void {
-    if (!this.newCategory.trim()) {
-      return;
-    }
+    if (!this.newCategory.trim()) return;
 
     this.categoryService.addCategory(this.newCategory);
     this.newCategory = '';
     this.loadCategories();
+  }
+
+  startEdit(category: Category): void {
+    this.editingCategoryId = category.id;
+    this.editingName = category.name;
+  }
+
+  saveEdit(): void {
+    if (!this.editingCategoryId || !this.editingName.trim()) return;
+
+    this.categoryService.updateCategory(
+      this.editingCategoryId,
+      this.editingName,
+    );
+
+    this.editingCategoryId = null;
+    this.editingName = '';
+    this.loadCategories();
+  }
+
+  cancelEdit(): void {
+    this.editingCategoryId = null;
+    this.editingName = '';
   }
 
   deleteCategory(id: string): void {

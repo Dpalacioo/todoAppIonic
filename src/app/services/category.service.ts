@@ -40,4 +40,15 @@ export class CategoryService {
     this.categories = this.categories.filter((c) => c.id !== id);
     this.save();
   }
+
+  updateCategory(id: string, newName: string): void {
+    const index = this.categories.findIndex((c) => c.id === id);
+    if (index > -1) {
+      this.categories[index] = {
+        ...this.categories[index],
+        name: newName.trim(),
+      };
+      this.save();
+    }
+  }
 }

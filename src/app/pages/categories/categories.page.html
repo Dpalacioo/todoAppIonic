@@ -7,10 +7,8 @@
 <ion-content class="ion-padding">
   <!-- Crear categoría -->
   <ion-item>
-    <ion-input
-      placeholder="Nueva categoría"
-      [(ngModel)]="newCategory"
-    ></ion-input>
+    <ion-input placeholder="Nueva categoría" [(ngModel)]="newCategory">
+    </ion-input>
 
     <ion-button
       slot="end"
@@ -21,20 +19,55 @@
     </ion-button>
   </ion-item>
 
-  <!-- Lista de categorías -->
+  <!-- Lista -->
   <ion-list>
     <ion-item *ngFor="let category of categories">
-      <ion-label>{{ category.name }}</ion-label>
+      <!-- Modo edición -->
+      <ng-container *ngIf="editingCategoryId === category.id; else normalView">
+        <ion-input [(ngModel)]="editingName"> </ion-input>
 
-      <ion-button
-        *ngIf="category.id !== 'general'"
-        color="danger"
-        fill="clear"
-        slot="end"
-        (click)="deleteCategory(category.id)"
-      >
-        Eliminar
-      </ion-button>
+        <ion-button
+          color="success"
+          fill="clear"
+          slot="end"
+          (click)="saveEdit()"
+        >
+          Guardar
+        </ion-button>
+
+        <ion-button
+          color="medium"
+          fill="clear"
+          slot="end"
+          (click)="cancelEdit()"
+        >
+          Cancelar
+        </ion-button>
+      </ng-container>
+
+      <!-- Vista normal -->
+      <ng-template #normalView>
+        <ion-label>{{ category.name }}</ion-label>
+
+        <ion-button
+          *ngIf="category.id !== 'general'"
+          fill="clear"
+          slot="end"
+          (click)="startEdit(category)"
+        >
+          Editar
+        </ion-button>
+
+        <ion-button
+          *ngIf="category.id !== 'general'"
+          color="danger"
+          fill="clear"
+          slot="end"
+          (click)="deleteCategory(category.id)"
+        >
+          Eliminar
+        </ion-button>
+      </ng-template>
     </ion-item>
   </ion-list>
 </ion-content>
