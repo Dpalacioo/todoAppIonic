@@ -26,12 +26,13 @@ export class TaskService {
     return [...this.tasks];
   }
 
-  addTask(title: string): void {
+  addTask(title: string, categoryId: string = 'general'): void {
     const newTask: Task = {
       id: Date.now().toString(),
       title: title.trim(),
       completed: false,
       createdAt: Date.now(),
+      categoryId,
     };
 
     this.tasks.unshift(newTask);
@@ -61,5 +62,9 @@ export class TaskService {
         : task,
     );
     this.saveTasks();
+  }
+
+  getTasksByCategory(categoryId: string): Task[] {
+    return this.tasks.filter((task) => task.categoryId === categoryId);
   }
 }
