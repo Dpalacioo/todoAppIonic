@@ -24,7 +24,7 @@
     <ion-item *ngFor="let category of categories">
       <!-- Modo edición -->
       <ng-container *ngIf="editingCategoryId === category.id; else normalView">
-        <ion-input [(ngModel)]="editingName"> </ion-input>
+        <ion-input [(ngModel)]="editingName"></ion-input>
 
         <ion-button
           color="success"

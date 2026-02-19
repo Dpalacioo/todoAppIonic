@@ -13,3 +13,32 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 @import "@ionic/angular/css/display.css";
+
+ion-toolbar {
+  --background: linear-gradient(135deg, #4e73df, #224abe);
+  --color: white;
+}
+
+ion-title {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+ion-button {
+  --border-radius: 12px;
+}
+
+ion-item {
+  --border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+.completed {
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+
+ion-tab-bar {
+  --background: #ffffff;
+  border-top: 1px solid #e0e0e0;
+}

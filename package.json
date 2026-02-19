@@ -32,6 +32,12 @@
     "@angular/compiler-cli": "~14.3.0",
     "@ionic/angular-toolkit": "^6.0.0",
     "@types/jasmine": "~4.3.0",
+    "cordova-android": "^14.0.1",
+    "cordova-plugin-device": "2.0.2",
+    "cordova-plugin-ionic-keyboard": "^2.0.5",
+    "cordova-plugin-ionic-webview": "^5.0.0",
+    "cordova-plugin-splashscreen": "5.0.2",
+    "cordova-plugin-statusbar": "^2.4.2",
     "jasmine-core": "~4.5.0",
     "jasmine-spec-reporter": "~7.0.0",
     "karma": "~6.4.0",
@@ -41,5 +47,17 @@
     "karma-jasmine-html-reporter": "~2.0.0",
     "typescript": "~4.7.4"
   },
-  "description": "Ionic Angular 14 ToDo App (Cordova)"
+  "description": "Ionic Angular 14 ToDo App (Cordova)",
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-ionic-keyboard": {}
+    },
+    "platforms": [
+      "android"
+    ]
+  }
 }
